@@ -12,6 +12,7 @@ Flutter + FlutterFire: panel cleaning reminders with **email/password**, **Googl
 
 ```powershell
 cd c:\Users\QBS\Downloads\solar_clean\solar_clean
+# If missing: copy examples or run FlutterFire (see Secrets)
 flutter pub get
 flutter run
 ```
@@ -22,10 +23,22 @@ flutter run
 |------|---------|
 | `android/upload-keystore.jks` | **No** |
 | `android/key.properties` | **No** (copy from `key.properties.example`) |
-| `android/app/google-services.json` | Yes (Firebase client config) |
-| `lib/firebase_options.dart` | Yes |
+| `android/app/google-services.json` | **No** (example only in repo) |
+| `lib/firebase_options.dart` | **No** (example only in repo) |
 
-Never put keystore passwords in git or chat. Firebase API keys in the app are client-restricted; no `.env` package is required.
+### If GitHub flagged the Firebase API key
+
+1. [Google Cloud → Credentials](https://console.cloud.google.com/apis/credentials?project=solar-clean-app) — **delete/rotate** the exposed Android API key.
+2. Restrict the new key to Android package `com.haris.solar_clean` + your debug/release SHA-1.
+3. Regenerate local config:
+
+```powershell
+flutterfire configure --project=solar-clean-app --platforms=android
+```
+
+Or download `google-services.json` from Firebase Console into `android/app/`, then run FlutterFire so `lib/firebase_options.dart` matches.
+
+Never put keystore passwords or real API keys in git or chat.
 
 ## Features
 
